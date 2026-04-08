@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -56,6 +57,16 @@ async function bootstrap() {
 
   // app logger
   const logger = new Logger(AppModule.name);
+
+  // swagger
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('NestJs Boilerplate Ver2')
+    .setDescription('The NestJs Boilerplate Ver2 API description')
+    .setVersion('1.0')
+    .build();
+  const documentFactory = () =>
+    SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('api', app, documentFactory);
 
   await app.listen(port, () => {
     logger.log(`Server is running on port ${port} in ${env} mode`);
