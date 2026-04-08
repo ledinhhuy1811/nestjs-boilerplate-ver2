@@ -1,12 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
+import { Logger } from '@nestjs/common';
 import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 
 import { AppModule } from './app.module';
 import { ConfigsInterface } from './configs/configs.interface';
-import { Logger } from '@nestjs/common';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -26,6 +27,12 @@ async function bootstrap() {
 
   // cookie parser
   app.use(cookieParser());
+
+  // global exception filter
+  app.useGlobalFilters();
+
+  // global interceptor
+  app.useGlobalInterceptors(new ResponseInterceptor());
 
   // graceful shutdown
   app.enableShutdownHooks();
