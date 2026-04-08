@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 
 import { AppModule } from './app.module';
 import { ConfigsInterface } from './configs/configs.interface';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -35,8 +36,11 @@ async function bootstrap() {
   const port = configService.get('port');
   const env = configService.get('env');
 
+  // app logger
+  const logger = new Logger(AppModule.name);
+
   await app.listen(port, () => {
-    console.log(`Server is running on port ${port} in ${env} mode`);
+    logger.log(`Server is running on port ${port} in ${env} mode`);
   });
 }
 
