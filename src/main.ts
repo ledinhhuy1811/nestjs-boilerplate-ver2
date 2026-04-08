@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -28,10 +28,21 @@ async function bootstrap() {
   // cookie parser
   app.use(cookieParser());
 
-  // global exception filter
+  // global exception filters
   app.useGlobalFilters();
 
-  // global interceptor
+  // global pipes
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  );
+
+  // global interceptors
   app.useGlobalInterceptors(new ResponseInterceptor());
 
   // graceful shutdown
