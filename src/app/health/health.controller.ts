@@ -14,6 +14,9 @@ export class HealthController {
     ...checkHealthSwagger.operations,
   })
   @ApiResponse({ ...checkHealthSwagger.responses[HttpStatus.OK] })
+  @ApiResponse({
+    ...checkHealthSwagger.responses[HttpStatus.INTERNAL_SERVER_ERROR],
+  })
   checkHealth() {
     return this.healthService.checkHealth();
   }

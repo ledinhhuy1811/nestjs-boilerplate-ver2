@@ -23,5 +23,21 @@ export const checkHealthSwagger = {
         },
       },
     },
+    [HttpStatus.INTERNAL_SERVER_ERROR]: {
+      status: HttpStatus.INTERNAL_SERVER_ERROR,
+      description: 'Internal server error',
+      content: {
+        'application/json': {
+          example: {
+            message: 'Internal server error',
+            data: {
+              status: HttpStatus.INTERNAL_SERVER_ERROR,
+            },
+            success: false,
+            timestamp: new Date().toISOString(),
+          },
+        },
+      },
+    },
   },
 };
