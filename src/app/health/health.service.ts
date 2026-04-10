@@ -4,10 +4,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 export class HealthService {
   checkHealth() {
     return {
-      data: {
-        status: HttpStatus.OK,
-      },
-      message: 'Server is running',
+      status: HttpStatus.OK,
     };
   }
 }

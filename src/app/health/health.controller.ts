@@ -18,6 +18,11 @@ export class HealthController {
     ...checkHealthSwagger.responses[HttpStatus.INTERNAL_SERVER_ERROR],
   })
   checkHealth() {
-    return this.healthService.checkHealth();
+    const data = this.healthService.checkHealth();
+
+    return {
+      data,
+      message: 'Server is running',
+    };
   }
 }
