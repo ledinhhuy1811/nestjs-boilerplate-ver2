@@ -6,6 +6,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "db:start": "docker-compose -f ./src/docker/docker-compose.yml up -d",
+    "db:stop": "docker-compose -f ./src/docker/docker-compose.yml down -v",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -25,6 +27,7 @@
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.3",
     "@nestjs/core": "^11.0.1",
+    "@nestjs/mongoose": "^11.0.4",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.2.6",
     "cache-manager": "^7.2.8",
@@ -34,6 +37,7 @@
     "cookie-parser": "^1.4.7",
     "helmet": "^8.1.0",
     "joi": "^18.1.2",
+    "mongoose": "^9.4.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },

@@ -1,6 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CacheModule } from '@nestjs/cache-manager';
+import { MongooseModule } from '@nestjs/mongoose';
 
 import configs, { configSchema } from './configs';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
@@ -23,6 +24,15 @@ import { UserModule } from './app/user/user.module';
     // cache module
     CacheModule.register({
       isGlobal: true,
+    }),
+
+    // mongoose module
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get('database.url'),
+      }),
+      inject: [ConfigService],
     }),
 
     // services module

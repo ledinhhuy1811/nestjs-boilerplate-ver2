@@ -11,6 +11,11 @@ export const configSchema = Joi.object({
   ORAI_RPC_URL: Joi.string()
     .uri()
     .default('https://oraichain-rpc.publicnode.com:443'),
+
+  // database
+  MONGODB_URL: Joi.string()
+    .uri()
+    .default('mongodb://admin:root@localhost:27017/'),
 });
 
 export default () => ({
@@ -21,5 +26,10 @@ export default () => ({
   // rpc
   rpc: {
     orai: process.env.ORAI_RPC_URL,
+  },
+
+  // database
+  database: {
+    url: process.env.MONGODB_URL,
   },
 });

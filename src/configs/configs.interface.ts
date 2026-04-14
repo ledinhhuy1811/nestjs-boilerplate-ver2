@@ -7,4 +7,9 @@ export interface ConfigsInterface {
   rpc: {
     orai: string;
   };
+
+  // database
+  database: {
+    url: string;
+  };
 }
