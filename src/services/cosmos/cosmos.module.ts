@@ -1,6 +1,8 @@
-import { Global, Module } from '@nestjs/common';
+import { Global, Inject, Module, OnModuleDestroy } from '@nestjs/common';
+import { CosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 
 import { cosmosClientProvider } from './cosmos.provider';
+import { COSMOS_CLIENT } from './contants';
 
 @Global()
 @Module({
@@ -8,4 +10,12 @@ import { cosmosClientProvider } from './cosmos.provider';
   providers: [cosmosClientProvider],
   exports: [cosmosClientProvider],
 })
-export class CosmosModule {}
+export class CosmosModule implements OnModuleDestroy {
+  constructor(
+    @Inject(COSMOS_CLIENT) private readonly cosmosClient: CosmWasmClient,
+  ) {}
+
+  onModuleDestroy() {
+    this.cosmosClient.disconnect();
+  }
+}
