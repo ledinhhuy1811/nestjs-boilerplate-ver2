@@ -1,6 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 
-export const checkHealthSwagger = {
+export default {
   operations: {
     summary: 'Check health of the server',
     description:
