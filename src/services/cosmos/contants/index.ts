@@ -1,0 +1,1 @@
+export const COSMOS_CLIENT = 'COSMOS_CLIENT';
