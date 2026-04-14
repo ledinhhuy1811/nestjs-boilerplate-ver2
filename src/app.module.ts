@@ -6,6 +6,7 @@ import configs, { configSchema } from './configs';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { HealthModule } from './app/health/health.module';
 import { CosmosModule } from './services/cosmos/cosmos.module';
+import { UserModule } from './app/user/user.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { CosmosModule } from './services/cosmos/cosmos.module';
 
     // app modules
     HealthModule,
+    UserModule,
   ],
 })
 export class AppModule implements NestModule {
