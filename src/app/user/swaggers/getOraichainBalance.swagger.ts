@@ -11,8 +11,8 @@ export default {
     description: 'The address to get the Oraichain balance for',
     example: 'orai1lrkhggqe7u2j3z3zdypv6m8v9zhjmng85gu4y9',
   },
-  responses: {
-    [HttpStatus.OK]: {
+  responses: [
+    {
       status: HttpStatus.OK,
       description: 'Oraichain balance fetched successfully',
       content: {
@@ -31,7 +31,7 @@ export default {
         },
       },
     },
-    [HttpStatus.INTERNAL_SERVER_ERROR]: {
+    {
       status: HttpStatus.INTERNAL_SERVER_ERROR,
       description: 'Internal server error',
       content: {
@@ -47,5 +47,5 @@ export default {
         },
       },
     },
-  },
+  ],
 };

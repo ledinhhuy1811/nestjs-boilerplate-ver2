@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus, Param } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { UserService } from './user.service';
@@ -14,10 +14,7 @@ export class UserController {
   @Swagger({
     operations: getOraichainBalanceSwagger.operations,
     params: getOraichainBalanceSwagger.params,
-    responses: [
-      getOraichainBalanceSwagger.responses[HttpStatus.OK],
-      getOraichainBalanceSwagger.responses[HttpStatus.INTERNAL_SERVER_ERROR],
-    ],
+    responses: getOraichainBalanceSwagger.responses,
   })
   async getOraichainBalance(@Param('address') address: string) {
     const data = await this.userService.getOraichainBalance(address);

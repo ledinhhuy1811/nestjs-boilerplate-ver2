@@ -12,4 +12,7 @@ export interface ConfigsInterface {
   database: {
     url: string;
   };
+
+  // bcrypt
+  bcryptRounds: number;
 }

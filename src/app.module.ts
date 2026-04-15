@@ -8,6 +8,7 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { HealthModule } from './app/health/health.module';
 import { CosmosModule } from './services/cosmos/cosmos.module';
 import { UserModule } from './app/user/user.module';
+import { AuthModule } from './app/auth/auth.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { UserModule } from './app/user/user.module';
     // app modules
     HealthModule,
     UserModule,
+    AuthModule,
   ],
 })
 export class AppModule implements NestModule {

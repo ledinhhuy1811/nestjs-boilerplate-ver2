@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { HealthService } from './health.service';
@@ -13,10 +13,7 @@ export class HealthController {
   @Get()
   @Swagger({
     operations: checkHealthSwagger.operations,
-    responses: [
-      checkHealthSwagger.responses[HttpStatus.OK],
-      checkHealthSwagger.responses[HttpStatus.INTERNAL_SERVER_ERROR],
-    ],
+    responses: checkHealthSwagger.responses,
   })
   checkHealth() {
     const data = this.healthService.checkHealth();

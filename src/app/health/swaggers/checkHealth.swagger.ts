@@ -6,8 +6,8 @@ export default {
     description:
       'Check health of the server by returning the status of the server',
   },
-  responses: {
-    [HttpStatus.OK]: {
+  responses: [
+    {
       status: HttpStatus.OK,
       description: 'Server is running',
       content: {
@@ -23,7 +23,7 @@ export default {
         },
       },
     },
-    [HttpStatus.INTERNAL_SERVER_ERROR]: {
+    {
       status: HttpStatus.INTERNAL_SERVER_ERROR,
       description: 'Internal server error',
       content: {
@@ -39,5 +39,5 @@ export default {
         },
       },
     },
-  },
+  ],
 };
