@@ -69,6 +69,15 @@ async function bootstrap() {
     .setTitle('NestJs Boilerplate Ver2')
     .setDescription('The NestJs Boilerplate Ver2 API description')
     .setVersion('1.0')
+    .addApiKey(
+      {
+        type: 'apiKey',
+        in: 'header',
+        name: 'api-key',
+        description: 'API key',
+      },
+      'api-key',
+    )
     .build();
   const documentFactory = () =>
     SwaggerModule.createDocument(app, swaggerConfig);

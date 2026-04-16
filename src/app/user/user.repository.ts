@@ -11,8 +11,11 @@ export class UserRepository {
     @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
-  async create(user: RegisterDto): Promise<User> {
-    const newUser = await this.userModel.create(user);
+  async create(user: RegisterDto, isAdmin: boolean): Promise<User> {
+    const newUser = await this.userModel.create({
+      ...user,
+      role: isAdmin ? 'admin' : 'user',
+    });
 
     return newUser.toObject();
   }

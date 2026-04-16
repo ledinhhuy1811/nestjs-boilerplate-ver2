@@ -15,4 +15,7 @@ export interface ConfigsInterface {
 
   // bcrypt
   bcryptRounds: number;
+
+  // api key
+  apiKey: string;
 }

@@ -19,27 +19,29 @@ export const configSchema = Joi.object({
 
   // bcrypt
   BCRYPT_ROUNDS: Joi.number().default(10),
-});
 
-const { value: config } = configSchema
-  .prefs({ errors: { label: 'key' } })
-  .validate(process.env);
+  // api key
+  API_KEY: Joi.string().required(),
+});
 
 export default () => ({
   // environment
-  env: config.NODE_ENV,
-  port: config.PORT,
+  env: process.env.NODE_ENV,
+  port: Number(process.env.PORT),
 
   // rpc
   rpc: {
-    orai: config.ORAI_RPC_URL,
+    orai: process.env.ORAI_RPC_URL,
   },
 
   // database
   database: {
-    url: config.MONGODB_URL,
+    url: process.env.MONGODB_URL,
   },
 
   // bcrypt
-  bcryptRounds: config.BCRYPT_ROUNDS,
+  bcryptRounds: Number(process.env.BCRYPT_ROUNDS),
+
+  // api key
+  apiKey: process.env.API_KEY,
 });
