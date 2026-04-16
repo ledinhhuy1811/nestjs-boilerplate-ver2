@@ -1,16 +1,23 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
 import { RegisterDto } from './dtos/register.dto';
 import { UserRepository } from '../user/user.repository';
 import { ConfigsInterface } from '../../configs/configs.interface';
+import { LoginDto } from './dtos/login.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly configService: ConfigService<ConfigsInterface>,
+    private readonly jwtService: JwtService,
   ) {}
 
   async registerUser(registerDto: RegisterDto) {
@@ -65,5 +72,49 @@ export class AuthService {
     );
 
     return { admin };
+  }
+
+  async loginUser(loginDto: LoginDto) {
+    const { email, password } = loginDto;
+
+    const user = await this.userRepository.findByEmail(email);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new BadRequestException('Wrong password');
+    }
+
+    const payload = {
+      id: user._id.toString(),
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
+    const accessToken = this.generateAccessToken(payload);
+    const refreshToken = this.generateRefreshToken(payload);
+
+    return {
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  private generateAccessToken(payload: any) {
+    const { accessTokenExpirationTime } = this.configService.get('jwt');
+
+    return this.jwtService.sign(payload, {
+      expiresIn: accessTokenExpirationTime || '5m',
+    });
+  }
+
+  private generateRefreshToken(payload: any) {
+    const { refreshTokenExpirationTime } = this.configService.get('jwt');
+
+    return this.jwtService.sign(payload, {
+      expiresIn: refreshTokenExpirationTime || '1d',
+    });
   }
 }

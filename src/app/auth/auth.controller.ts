@@ -9,6 +9,8 @@ import {
 } from './swaggers/register.swagger';
 import { Swagger } from '../../common/decorators/swagger.decorator';
 import { ApiKeyGuard } from '../../common/guards/apiKey.guard';
+import { LoginDto } from './dtos/login.dto';
+import { loginUserSwagger } from './swaggers/login.swagger';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -44,6 +46,21 @@ export class AuthController {
     return {
       data,
       message: 'Admin registered successfully',
+    };
+  }
+
+  @Post('login-user')
+  @Swagger({
+    operations: loginUserSwagger.operations,
+    body: loginUserSwagger.body,
+    responses: loginUserSwagger.responses,
+  })
+  async loginUser(@Body() loginDto: LoginDto) {
+    const data = await this.authService.loginUser(loginDto);
+
+    return {
+      data,
+      message: 'User logged in successfully',
     };
   }
 }

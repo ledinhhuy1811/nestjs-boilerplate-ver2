@@ -22,6 +22,11 @@ export const configSchema = Joi.object({
 
   // api key
   API_KEY: Joi.string().required(),
+
+  // jwt
+  JWT_SECRET: Joi.string().required(),
+  JWT_ACCESS_TOKEN_EXPIRATION_TIME: Joi.string().default('5m'),
+  JWT_REFRESH_TOKEN_EXPIRATION_TIME: Joi.string().default('1d'),
 });
 
 export default () => ({
@@ -44,4 +49,11 @@ export default () => ({
 
   // api key
   apiKey: process.env.API_KEY,
+
+  // jwt
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    accessTokenExpirationTime: process.env.JWT_ACCESS_TOKEN_EXPIRATION_TIME,
+    refreshTokenExpirationTime: process.env.JWT_REFRESH_TOKEN_EXPIRATION_TIME,
+  },
 });

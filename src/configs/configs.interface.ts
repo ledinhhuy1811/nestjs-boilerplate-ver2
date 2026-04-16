@@ -18,4 +18,11 @@ export interface ConfigsInterface {
 
   // api key
   apiKey: string;
+
+  // jwt
+  jwt: {
+    secret: string;
+    accessTokenExpirationTime: string;
+    refreshTokenExpirationTime: string;
+  };
 }

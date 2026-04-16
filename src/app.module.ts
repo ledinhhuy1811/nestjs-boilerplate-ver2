@@ -2,6 +2,7 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CacheModule } from '@nestjs/cache-manager';
 import { MongooseModule } from '@nestjs/mongoose';
+import { JwtModule } from '@nestjs/jwt';
 
 import configs, { configSchema } from './configs';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
@@ -32,6 +33,19 @@ import { AuthModule } from './app/auth/auth.module';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         uri: configService.get('database.url'),
+      }),
+      inject: [ConfigService],
+    }),
+
+    // jwt module
+    JwtModule.registerAsync({
+      global: true,
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get('jwt.secret'),
+        signOptions: {
+          expiresIn: configService.get('jwt.accessTokenExpirationTime'),
+        },
       }),
       inject: [ConfigService],
     }),
