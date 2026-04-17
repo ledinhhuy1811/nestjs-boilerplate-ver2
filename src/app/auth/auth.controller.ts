@@ -10,7 +10,7 @@ import {
 import { Swagger } from '../../common/decorators/swagger.decorator';
 import { ApiKeyGuard } from '../../common/guards/apiKey.guard';
 import { LoginDto } from './dtos/login.dto';
-import { loginUserSwagger } from './swaggers/login.swagger';
+import { loginAdminSwagger, loginUserSwagger } from './swaggers/login.swagger';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -56,11 +56,28 @@ export class AuthController {
     responses: loginUserSwagger.responses,
   })
   async loginUser(@Body() loginDto: LoginDto) {
-    const data = await this.authService.loginUser(loginDto);
+    const data = await this.authService.login(loginDto);
 
     return {
       data,
       message: 'User logged in successfully',
+    };
+  }
+
+  @Post('login-admin')
+  @UseGuards(ApiKeyGuard)
+  @Swagger({
+    apiKey: loginAdminSwagger.apiKey,
+    operations: loginAdminSwagger.operations,
+    body: loginAdminSwagger.body,
+    responses: loginAdminSwagger.responses,
+  })
+  async loginAdmin(@Body() loginDto: LoginDto) {
+    const data = await this.authService.login(loginDto);
+
+    return {
+      data,
+      message: 'Admin logged in successfully',
     };
   }
 }

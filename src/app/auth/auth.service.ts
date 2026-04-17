@@ -74,7 +74,7 @@ export class AuthService {
     return { admin };
   }
 
-  async loginUser(loginDto: LoginDto) {
+  async login(loginDto: LoginDto) {
     const { email, password } = loginDto;
 
     const user = await this.userRepository.findByEmail(email);
