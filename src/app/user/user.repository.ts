@@ -25,4 +25,10 @@ export class UserRepository {
 
     return user?.toObject() as UserDocument | null;
   }
+
+  async findById(id: string): Promise<UserDocument | null> {
+    const user = await this.userModel.findById(id);
+
+    return user?.toObject() as UserDocument | null;
+  }
 }

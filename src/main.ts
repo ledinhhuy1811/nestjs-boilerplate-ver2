@@ -78,6 +78,7 @@ async function bootstrap() {
       },
       'api-key',
     )
+    .addBearerAuth()
     .build();
   const documentFactory = () =>
     SwaggerModule.createDocument(app, swaggerConfig);
