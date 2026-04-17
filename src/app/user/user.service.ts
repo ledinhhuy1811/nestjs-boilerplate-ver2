@@ -3,6 +3,7 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 
 import { COSMOS_CLIENT } from '../../services/cosmos/contants';
 import { UserRepository } from './user.repository';
+import { GetAllUsersDto } from './dtos/getAll.dto';
 
 @Injectable()
 export class UserService {
@@ -18,6 +19,14 @@ export class UserService {
     }
 
     return { user };
+  }
+
+  async getAllUsers(query: GetAllUsersDto) {
+    const { page = 1, limit = 10 } = query;
+    const users = await this.userRepository.findAll(page, limit);
+    const totalUsers = await this.userRepository.countAllUsers();
+
+    return { page, limit, total: totalUsers, data: users };
   }
 
   async getOraichainBalance(address: string) {

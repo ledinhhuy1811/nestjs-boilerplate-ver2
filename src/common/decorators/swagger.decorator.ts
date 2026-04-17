@@ -7,6 +7,8 @@ import {
   ApiOperationOptions,
   ApiParam,
   ApiParamOptions,
+  ApiQuery,
+  ApiQueryOptions,
   ApiResponse,
   ApiResponseOptions,
   ApiSecurity,
@@ -15,8 +17,9 @@ import {
 export const Swagger = (swaggerInfos: {
   apiKey?: any;
   bearerAuth?: any;
-  body?: ApiBodyOptions;
   operations?: ApiOperationOptions;
+  body?: ApiBodyOptions;
+  query?: ApiQueryOptions;
   params?: ApiParamOptions;
   responses?: ApiResponseOptions[];
 }) => {
@@ -24,6 +27,7 @@ export const Swagger = (swaggerInfos: {
     swaggerInfos.apiKey ? ApiSecurity(swaggerInfos.apiKey) : Swagger,
     swaggerInfos.bearerAuth ? ApiBearerAuth() : Swagger,
     swaggerInfos.body ? ApiBody(swaggerInfos.body) : Swagger,
+    swaggerInfos.query ? ApiQuery(swaggerInfos.query) : Swagger,
     swaggerInfos.params ? ApiParam(swaggerInfos.params) : Swagger,
     ApiOperation(swaggerInfos.operations ?? {}),
     ...(swaggerInfos.responses ?? []).map((response) => ApiResponse(response)),

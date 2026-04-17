@@ -31,4 +31,18 @@ export class UserRepository {
 
     return user?.toObject() as UserDocument | null;
   }
+
+  async findAll(page: number, limit: number): Promise<UserDocument[]> {
+    const users = await this.userModel
+      .find()
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .exec();
+
+    return users.map((user) => user.toObject()) as UserDocument[];
+  }
+
+  async countAllUsers(): Promise<number> {
+    return this.userModel.countDocuments();
+  }
 }
