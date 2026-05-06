@@ -3,11 +3,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CacheModule } from '@nestjs/cache-manager';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
+import { ScheduleModule as NestScheduleModule } from '@nestjs/schedule';
 
 import configs, { configSchema } from './configs';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { HealthModule } from './app/health/health.module';
 import { CosmosModule } from './services/cosmos/cosmos.module';
+import { ScheduleModule } from './services/schedule/schedule.module';
 import { UserModule } from './app/user/user.module';
 import { AuthModule } from './app/auth/auth.module';
 
@@ -50,8 +52,12 @@ import { AuthModule } from './app/auth/auth.module';
       inject: [ConfigService],
     }),
 
+    // schedule module
+    NestScheduleModule.forRoot(),
+
     // services module
     CosmosModule,
+    ScheduleModule,
 
     // app modules
     HealthModule,
