@@ -12,6 +12,7 @@ import { CosmosModule } from './services/cosmos/cosmos.module';
 import { ScheduleModule } from './services/schedule/schedule.module';
 import { UserModule } from './app/user/user.module';
 import { AuthModule } from './app/auth/auth.module';
+import { TaskModule } from './services/task/task.module';
 
 @Module({
   imports: [
@@ -58,6 +59,7 @@ import { AuthModule } from './app/auth/auth.module';
     // services module
     CosmosModule,
     ScheduleModule,
+    TaskModule,
 
     // app modules
     HealthModule,
